@@ -195,7 +195,6 @@ while running:
         if collision_detection(slug_baddie_X[i], slug_baddie_Y[i],
                                laser_X, laser_Y, 20):
             # initialize laser
-            laser_Y = 480
             l_state = False
             pygame.mixer.find_channel(True).play(kill_sound)
             score += 10
