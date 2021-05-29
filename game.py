@@ -60,8 +60,8 @@ for i in range(number_baddies):
     # initial position
     slug_baddie_X.append(random.randint(0, 700))
     slug_baddie_Y.append(random.randint(0, 150))
-    slug_baddie_vble_pos_x.append(.4)
-    slug_baddie_vble_pos_y.append(8)
+    slug_baddie_vble_pos_x.append(.5)
+    slug_baddie_vble_pos_y.append(80)
 
 
 def display_slug_baddie(x, y, i):
@@ -85,9 +85,9 @@ def fire_laser(x, y):
 # Collision
 
 
-def collision_detection(slug_baddie_X, slug_baddie_Y, laser_X, laser_Y):
+def collision_detection(slug_baddie_X, slug_baddie_Y, laser_X, laser_Y, threshold):
     dist = math.sqrt(math.pow(slug_baddie_X - laser_X, 2) + math.pow(slug_baddie_Y - laser_Y, 2))
-    if dist < 20:
+    if dist < threshold:
         return True
     else:
         return False
@@ -99,6 +99,14 @@ font = pygame.font.Font('./requirements/Slugterra.otf', 48)
 pygame.font.init()
 X = 10
 Y = 10
+
+# Game Over
+over_font = pygame.font.Font('./requirements/Slugterra.otf', 80)
+
+
+def game_over():
+    over = over_font.render("GAME OVER", True, (255, 255, 0))
+    window.blit(over, (200, 220))
 
 
 def display_score(X, Y):
@@ -150,6 +158,16 @@ while running:
 
     # slug_baddie logic
     for i in range(number_baddies):
+
+        # game over logic
+        if slug_baddie_Y[i] > 600 or collision_detection(
+                slug_baddie_X[i], slug_baddie_Y[i],
+                slug_goodie_X, slug_goodie_Y, 50):
+            for j in range(number_baddies):
+                slug_baddie_Y[j] = 2000
+            game_over()
+            break
+
         slug_baddie_X[i] += slug_baddie_vble_pos_x[i]
 
         if slug_baddie_X[i] <= 0:
@@ -158,7 +176,8 @@ while running:
         if slug_baddie_X[i] >= 700:
             slug_baddie_vble_pos_x[i] = -.3
             slug_baddie_Y[i] += slug_baddie_vble_pos_y[i]
-        if collision_detection(slug_baddie_X[i], slug_baddie_Y[i], laser_X, laser_Y):
+        if collision_detection(slug_baddie_X[i], slug_baddie_Y[i],
+                               laser_X, laser_Y, 20):
             # initialize laser
             laser_Y = 480
             l_state = False

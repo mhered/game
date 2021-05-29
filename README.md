@@ -1,8 +1,12 @@
-# The Legend of Slugterra v1.0 
+# The Legend of Slugterra
 
 "The Legend of Slugterra" is a simple game developed with Pygame for my son Guille.
 
 This first release is a very basic clone of the classic Space Invaders game inspired by a Pygame tutorial by edureka.
+
+# Release history
+* v1.1 Add Game Over screen
+* v1.0 Initial release
 
 # Credits
 
