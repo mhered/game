@@ -17,6 +17,7 @@ import math
 # https://slugterra.fandom.com/wiki/SlugTerra_Wiki
 
 # initialization
+pygame.mixer.init()
 pygame.init()
 
 # window
@@ -28,6 +29,19 @@ pygame.display.set_caption('The Legend of Slugterra')
 # icon
 icon = pygame.image.load("./requirements/slugicon32.png")
 pygame.display.set_icon(icon)
+
+# Loading and playing a sound effect:
+laser_sound = pygame.mixer.Sound('./requirements/laser_sound2.wav')
+kill_sound = pygame.mixer.Sound('./requirements/kill_sound.wav')
+laser_sound.set_volume(0.05)
+kill_sound.set_volume(0.2)
+
+
+# Loading and playing background music:
+pygame.mixer.music.load("./requirements/thunder.ogg")
+pygame.mixer.music.play(-1, 22.8)
+pygame.mixer.music.set_volume(0.5)
+
 
 # background
 bg = pygame.image.load("./requirements/bkg800-600.jpg")
@@ -80,6 +94,7 @@ l_state = False
 
 def fire_laser(x, y):
     window.blit(laser, (x, y))
+    pygame.mixer.find_channel(True).play(laser_sound)
 
 
 # Collision
@@ -173,6 +188,7 @@ while running:
         if slug_baddie_X[i] <= 0:
             slug_baddie_vble_pos_x[i] = .3
             slug_baddie_Y[i] += slug_baddie_vble_pos_y[i]
+
         if slug_baddie_X[i] >= 700:
             slug_baddie_vble_pos_x[i] = -.3
             slug_baddie_Y[i] += slug_baddie_vble_pos_y[i]
@@ -181,6 +197,7 @@ while running:
             # initialize laser
             laser_Y = 480
             l_state = False
+            pygame.mixer.find_channel(True).play(kill_sound)
             score += 10
             slug_baddie_X[i] = random.randint(0, 700)
             slug_baddie_Y[i] = random.randint(0, 200)

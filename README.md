@@ -5,6 +5,10 @@
 This first release is a very basic clone of the classic Space Invaders game inspired by a Pygame tutorial by edureka.
 
 # Release history
+<<<<<<< HEAD
+=======
+* v1.2 Add music and sound effects
+>>>>>>> Add music and sound effects
 * v1.1 Add Game Over screen
 * v1.0 Initial release
 
